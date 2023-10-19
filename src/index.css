@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+    .border-default {
+        @apply w-[32px] h-[32px] rounded-md grid auto-cols-max  border-solid border-[1px] border-[#d0d7de] justify-center items-center mr-2
+    }
+    .backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5); /* Màu nền với độ mờ 50% */
+      }
+
+}
