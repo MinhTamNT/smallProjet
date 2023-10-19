@@ -6,7 +6,7 @@ const HomePage = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
   const naigate = useNavigate();
   useEffect(() => {
-    if (!user && user?.access_token) {
+    if (user?.access_token) {
       naigate("/login");
     }
   }, []);

@@ -8,11 +8,28 @@ import {
   registerSucces,
 } from "./authSlice";
 
+const getUserData = async (token) => {
+  try {
+    const response = await axios.get(
+      "http://127.0.0.1:8000/users/currentuser/",
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      }
+    );
+     
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const loginUser = async (user, dispatch, navigate) => {
   dispatch(loginStart());
   try {
-    const res = await axios.post(
-      "http://127.0.0.1:8000/o/token/",
+    const tokenResponse = await axios.post(
+      " http://127.0.0.1:8000/o/token/",
       {
         username: user.username,
         password: user.password,
@@ -27,9 +44,12 @@ export const loginUser = async (user, dispatch, navigate) => {
         },
       }
     );
-    const token = res.data.access_token;
-    localStorage.setItem("token", token);
-    dispatch(loginSuccess(res.data));
+
+    const accessToken = tokenResponse.data.access_token;
+    localStorage.setItem("token", accessToken);
+    const userData = await getUserData(accessToken);
+    console.log(userData);
+    dispatch(loginSuccess(userData));
     navigate("/");
   } catch (error) {
     console.error("Error Response:", error);
@@ -37,14 +57,14 @@ export const loginUser = async (user, dispatch, navigate) => {
   }
 };
 
-export const regiserUser = async (user, dispatch, navigate) => {
+export const registerUser = async (user, dispatch, navigate) => {
   dispatch(registerStart());
   try {
     await axios.post("http://127.0.0.1:8000/users/", user);
     dispatch(registerSucces());
     navigate("/login");
   } catch (error) {
-    console.log(error);
+    console.error(error);
     dispatch(registerFail());
   }
 };

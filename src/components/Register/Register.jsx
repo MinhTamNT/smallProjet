@@ -2,7 +2,7 @@ import "./register.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { regiserUser } from "../../Redux/apiRequest";
+import { registerUser } from "../../Redux/apiRequest";
 const Register = () => {
   const [username, setUsername] = useState("");
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const Register = () => {
       username: username,
       password: password,
     };
-    regiserUser(newUser, dispatch, navigate);
+    registerUser(newUser, dispatch, navigate);
   };
   return (
     <section className="register-container">
